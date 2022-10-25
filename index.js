@@ -22,6 +22,10 @@ app.get("/",(req,res) => {
     res.send("oi")
 })
 
+app.get("/cadastro",(req,res) => {
+    res.render("create");
+})
+
 
 app.listen(8080,() => {
     console.log("Servidor rodando...")
