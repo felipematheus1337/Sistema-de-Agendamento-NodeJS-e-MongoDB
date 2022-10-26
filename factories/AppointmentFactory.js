@@ -17,6 +17,7 @@ class AppointmentFactory {
         email:simpleAppointment.email,
         start: startDate,
         end:startDate,
+        notified:simpleAppointment.notified
     }
 
 

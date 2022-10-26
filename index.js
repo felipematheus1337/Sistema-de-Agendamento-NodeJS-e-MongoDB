@@ -79,6 +79,12 @@ app.post("/finish",async (req,res) => {
     
 })
 
+var pollTime = 5 * 6000;
+
+setInterval(async () => {
+ await AppointmentService.SendNotification();
+},pollTime)
+
 
 app.listen(8080,() => {
     console.log("Servidor rodando...")
