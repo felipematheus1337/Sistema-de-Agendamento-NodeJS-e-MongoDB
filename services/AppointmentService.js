@@ -47,6 +47,17 @@ class AppointmentService {
      }
     }
 
+    async GetById(id) {
+        try {
+            var event = await Appo.findOne({'_id':id});
+            return event;
+        }
+        catch(e) {
+         console.log(e);
+        }
+        
+    }
+
 }
 
 module.exports = new AppointmentService();
