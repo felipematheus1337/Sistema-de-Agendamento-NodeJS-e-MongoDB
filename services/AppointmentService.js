@@ -58,6 +58,31 @@ class AppointmentService {
         
     }
 
+    async Finish(id) {
+        try {
+            Appo.findByIdAndUpdate(id,{finished:true});
+            return true;
+        } catch(e) {
+            console.log(e);
+          return false;
+        }
+      
+
+    }
+
+    async Search(query){
+        try {
+            var appos = await Appo.find().or([{email:query},{cpf:query}]);
+            return appos;
+        } catch(e) {
+            console.log(e);
+            return [];
+
+        }
+        
+    }
+
+
 }
 
 module.exports = new AppointmentService();

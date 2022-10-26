@@ -14,6 +14,7 @@ class AppointmentFactory {
     var appo = {
         id:simpleAppointment._id,
         title:simpleAppointment.name + " - " + simpleAppointment.description,
+        email:simpleAppointment.email,
         start: startDate,
         end:startDate,
     }
