@@ -1,7 +1,9 @@
 var appointment = require("../models/Appointment");
 var mongoose = require("mongoose");
 var AppointmentFactory = require("../factories/AppointmentFactory");
-
+var dotenv = require("dotenv");
+dotenv.config();
+var mailer = require("nodemailer");
 
 const Appo = mongoose.model("Appointment",appointment);
 
@@ -83,18 +85,47 @@ class AppointmentService {
         
     }
 
+    getTransporter() {
+        var transporter = mailer.createTransport({
+            host:process.env.EMAIL_HOST,
+            port:process.env.EMAIL_PORT,
+            auth: {
+              user:process.env.EMAIL_USER,
+              pass:process.env.EMAIL_PASSWORD
+            }
+          })
+        return transporter;  
+    }
+
 
     async SendNotification() {
+        var transporter = this.getTransporter();
        var appos =  await this.GetAll(false);
-       appos.forEach(app => {
+       appos.forEach(async app => {
 
          var date = app.start.getTime();
          var hour = 1000 * 60 * 60;
          var gap = date-Date.now();
 
          if(gap <= hour) {
-            console.log(app.title);
-            console.log("Mande a not")
+           
+            if(!app.notified) {
+              await Appo.findByIdAndUpdate(app.id,{notified:true})
+             transporter.sendMail({
+                from:"Felipe Matheus <felipe@guia.com.br>",
+                to:app.email,
+                subject:"TESTE",
+                text:"TESTANDO <h1>UHUL</h1>"
+             }).then((msg) => {
+
+             }).catch(e => {
+
+             })
+
+             
+
+
+            }
          }
 
 

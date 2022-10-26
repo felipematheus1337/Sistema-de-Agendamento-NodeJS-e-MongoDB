@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const AppointmentService = require("./services/AppointmentService");
 const appointmentService = require("./services/AppointmentService");
 
+var dotenv = require("dotenv");
+dotenv.config();
 
 app.use(express.static("public"));
 
