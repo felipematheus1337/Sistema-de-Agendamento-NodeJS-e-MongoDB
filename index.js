@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+const AppointmentService = require("./services/AppointmentService");
 const appointmentService = require("./services/AppointmentService");
 
 
@@ -20,7 +21,7 @@ mongoose.connect("mongodb://localhost:27017/agendamento",{
 
 
 app.get("/",(req,res) => {
-    res.send("oi")
+    res.render("index")
 })
 
 app.get("/cadastro",(req,res) => {
@@ -41,6 +42,12 @@ app.post("/create",async (req,res) => {
         } else {
           return res.status(406).send("Ocorreu uma falha");
         }
+})
+
+app.get("/getcalendar", async (req,res) => {
+    var appointments = await AppointmentService.GetAll(false);
+    res.json(appointments);
+
 })
 
 
